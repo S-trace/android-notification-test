@@ -1,6 +1,7 @@
 package at.makubi.notificationtest;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -12,48 +13,15 @@ public class NotificationTest {
 
     public void testNotifications(final Context context) {
 
-        final VoidAsyncTask task1 = new VoidAsyncTask() {
-            @Override
-            protected void run() {
-                sleep(1000);
-
-                issueNotification(context, 1);
-            }
-        };
-
-        final VoidAsyncTask task2 = new VoidAsyncTask() {
-            @Override
-            protected void run() {
-                sleep(1000);
-
-                issueSummaryNotification(context, 2);
-                issueNotification(context, 2);
-            }
-        };
-
-        final VoidAsyncTask task3 = new VoidAsyncTask() {
-            @Override
-            protected void run() {
-                sleep(1000);
-
-                issueSummaryNotification(context, 3);
-                issueNotification(context, 3);
-            }
-        };
-
         final VoidAsyncTask task4 = new VoidAsyncTask() {
             @Override
             protected void run() {
-                sleep(1000);
 
                 issueSummaryNotification(context, 4);
                 issueNotification(context, 4);
             }
         };
 
-        task1.executeSerially();
-        task2.executeSerially();
-        task3.executeSerially();
         task4.executeSerially();
     }
 
@@ -70,8 +38,10 @@ public class NotificationTest {
         builder.setGroupSummary(true);
 
         // Setting sound and priority high (to enable heads-up notifications) results in displaying of non-summary notifications on the handheld
-        builder.setSound(RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_NOTIFICATION));
-
+        // builder.setSound(RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_NOTIFICATION));
+        //builder.setLights(Color.RED, 300, 100);
+        builder.setLights(Color.YELLOW, 300, 100);
+        //builder.setLights(Color.GREEN, 300, 100);
         NotificationManagerCompat.from(context).notify(notificationSummaryId, builder.build());
     }
 
